@@ -145,31 +145,12 @@ main{flex:1;min-height:0;overflow-y:auto;padding-block:14px;scrollbar-color:var(
 .cls .ab{font-size:.82rem}
 .cls .ab em{color:var(--fire);font-style:normal;font-family:var(--mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.06em}
 .seg{display:flex;gap:6px;flex-wrap:wrap}
-.segm{flex:1 1 140px;background:var(--solid);border:1px solid var(--line);border-radius:4px;padding:10px 12px;font-family:var(--display);font-weight:800;font-size:1.05rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.segm[aria-checked="true"]{border-color:var(--fire);color:var(--ink);box-shadow:0 0 0 1px var(--fire-dim),0 0 22px rgba(236,123,49,.15)}
-#b-centrar{display:none}
-body.modo-coop #b-centrar{display:inline-block}
-body.modo-coop #b-empezar{display:none}
-#formpj.oculto{display:none}
-#v-cjuego{background:rgba(16,12,10,.95);padding:18px 18px 22px}
 .slot{display:flex;gap:10px;align-items:center;flex-wrap:wrap;border-left:2px solid var(--line);padding:6px 0 6px 12px}
 .slot.activa{border-left-color:var(--fire)}
 .slot .si{flex:1 1 200px;min-width:0;display:grid;gap:2px}
 .slot b{font-family:var(--display);font-weight:800;font-size:1.2rem;text-transform:uppercase;letter-spacing:.03em}
 .slot .m{font-family:var(--mono);font-size:.72rem;color:var(--muted)}
 .slot .btn{font-size:.85rem;padding:6px 12px}
-body.modo-coop #partidasbox{display:none}
-.salahead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-.salacode{font-family:var(--mono);font-weight:700;font-size:1.8rem;letter-spacing:.28em;color:var(--fire)}
-#in-link,#in-codigo{flex:1 1 200px;min-width:0;background:var(--solid);border:1px solid var(--line);border-radius:4px;padding:9px 10px;font-family:var(--mono);font-size:.8rem}
-#in-codigo{font-size:1rem;letter-spacing:.2em}
-.plist{display:grid;gap:6px}
-.prow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.prow b{font-family:var(--display);font-weight:800;font-size:1.1rem;text-transform:uppercase;letter-spacing:.03em}
-.dot{width:9px;height:9px;border-radius:50%;background:var(--line);flex:none}
-.dot.on{background:var(--sick);box-shadow:0 0 6px var(--sick)}
-.cstatus{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-family:var(--mono);font-size:.76rem;color:var(--muted)}
-.cstatus>span:first-child{color:var(--ink)}
 .segb{flex:1 1 120px;background:var(--solid);border:1px solid var(--line);border-radius:4px;padding:10px 12px;font-family:var(--display);font-weight:800;font-size:1.1rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);transition:border-color .2s,color .2s,box-shadow .2s}
 .segb[aria-checked="true"]{border-color:var(--fire);color:var(--ink);box-shadow:0 0 0 1px var(--fire-dim),0 0 22px rgba(236,123,49,.15)}
 .tras{display:grid;gap:6px}
@@ -365,7 +346,6 @@ body.dying .app,body.dying #fx{filter:grayscale(1) contrast(1.15) brightness(.7)
         <button id="tab-juego" aria-pressed="true">Partida</button>
         <button id="tab-ficha" aria-pressed="false">Ficha</button>
         <button id="tab-caidos" aria-pressed="false">Caídos</button>
-        <button id="tab-coop" aria-pressed="false" title="Partida cooperativa con amigos">Coop</button>
         <button id="b-sonido" aria-pressed="false" title="Música y sonido ambiente">Sonido</button>
       </nav>
     </div>
@@ -379,14 +359,6 @@ body.dying .app,body.dying #fx{filter:grayscale(1) contrast(1.15) brightness(.7)
         <p>Un máster narra cada paso, inventa a quien te cruzas y decide qué hace el mundo con tus dados. Si caes, tu historia queda escrita y otro superviviente recoge lo que dejaste.</p>
       </div>
       <div class="paper stack">
-        <div class="field">
-          <span class="lbl">Modo de juego</span>
-          <div class="seg" role="radiogroup" aria-label="Modo de juego">
-            <button type="button" class="segm" role="radio" aria-checked="true" data-modo="solo">En solitario</button>
-            <button type="button" class="segm" role="radio" aria-checked="false" data-modo="coop">Cooperativo</button>
-          </div>
-        </div>
-        <div id="coopbox" class="coopbox stack" hidden></div>
         <div id="partidasbox" class="stack"></div>
       </div>
       <div class="paper stack" id="formpj">
@@ -438,7 +410,6 @@ body.dying .app,body.dying #fx{filter:grayscale(1) contrast(1.15) brightness(.7)
         </div>
         <div class="rbar">
           <button class="btn" id="b-empezar" disabled>Empezar a sobrevivir</button>
-          <button class="btn" id="b-centrar" type="button">Entrar en la sala con este personaje</button>
           <button class="btn ghost" id="b-todoazar" type="button">Sortear todo menos el nombre</button>
         </div>
         <div class="rules">
@@ -458,7 +429,6 @@ body.dying .app,body.dying #fx{filter:grayscale(1) contrast(1.15) brightness(.7)
     <section class="view paper" id="v-juego" hidden><div class="log" id="log"></div></section>
     <section class="view paper stack" id="v-ficha" hidden></section>
     <section class="view stack" id="v-caidos" hidden></section>
-    <section class="view paper" id="v-cjuego" hidden><div class="log" id="clog"></div></section>
   </main>
 
   <footer class="dock" id="dock" hidden>
@@ -474,19 +444,6 @@ body.dying .app,body.dying #fx{filter:grayscale(1) contrast(1.15) brightness(.7)
       <textarea id="in-accion" rows="3" maxlength="600" placeholder="¿Qué haces? Escribe lo que hace o dice tu personaje. Para hablar, pon sus palabras entre comillas." autocomplete="off"></textarea>
       <input type="hidden" id="in-attr" value="AUTO">
       <button class="btn" id="b-hacer">Actuar</button>
-    </form>
-  </footer>
-  <footer class="dock" id="cdock" hidden>
-    <div class="tray">
-      <div class="die" id="cd1"></div><div class="die" id="cd2"></div><div class="die" id="cd3" hidden></div>
-      <div class="trayinfo" id="ctray">Tu turno en la ronda.</div>
-    </div>
-    <div class="cstatus" id="cstatus"></div>
-    <div class="ability" id="cability"></div>
-    <div class="bag" id="cbag" hidden></div>
-    <form class="free" id="cfree">
-      <textarea id="c-accion" rows="3" maxlength="600" placeholder="¿Qué hace tu personaje esta ronda? Para hablar, pon sus palabras entre comillas." autocomplete="off"></textarea>
-      <button class="btn" id="c-hacer">Actuar</button>
     </form>
   </footer>
 </div>
@@ -744,7 +701,6 @@ function autoAttr(t){
 }
 
 function show(view){
-  if(MODO==="coop"){cShow(view==="crear"?"juego":view);return}
   $("tab-menu").setAttribute("aria-pressed","false");
   if(view==="juego"&&S.pj&&S.modo!=="crear")setTimeout(renderVitals,0);
   ["crear","juego","ficha","caidos"].forEach(v=>{$("v-"+v).hidden=v!==view});
@@ -1831,7 +1787,7 @@ $("b-todoazar").onclick=()=>{["pasado","objetivo","miedo"].forEach(sortearTras);
   if(!validarNombre()){$("hint-nombre").textContent="Todo sorteado. Solo falta que le pongas nombre.";$("in-nombre").focus()}};
 $("in-esc").addEventListener("change",()=>Escena.start($("in-esc").value));
 $("tab-juego").onclick=()=>show(S.modo==="crear"?"crear":"juego");
-$("tab-menu").onclick=()=>{if(MODO==="coop")cShow("crear");else{show("crear");$("tab-menu").setAttribute("aria-pressed","true");$("tab-juego").setAttribute("aria-pressed","false")}};
+$("tab-menu").onclick=()=>{show("crear");$("tab-menu").setAttribute("aria-pressed","true");$("tab-juego").setAttribute("aria-pressed","false")};
 $("tab-ficha").onclick=()=>show("ficha");
 $("tab-caidos").onclick=()=>show("caidos");
 $("b-sonido").onclick=()=>{const v=Sonido.toggle();S.sonido=v;save();syncSonido()};
@@ -1839,555 +1795,9 @@ document.addEventListener("pointerdown",function arr(e){if(e.target&&(e.target.i
 $("in-accion").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey&&!e.isComposing){e.preventDefault();$("free").requestSubmit()}});
 $("free").addEventListener("submit",e=>{e.preventDefault();const v=$("in-accion").value;if(!v.trim())return;$("in-accion").value="";turnoLibre(v,$("in-attr").value);$("in-attr").value="AUTO"});
 
-/* ================= MODO COOPERATIVO ================= */
-const ART_URL="https://claude.ai/artifact/UNoGSA8vHW67xyR1pQaAtT";
-const COOPKEY="tierra-muerta-coop";
-let MODO="solo";
-const CO={db:null,user:null,room:null,r:null,uid:null,code:null,sd:null,jug:{},acc:{},yo:null,unsub:[],peers:[],host:false,lastN:0,hostBusy:false,ready:null,canWrite:null,escT:0,prevYo:null,prevDia:null,prevPnjs:null,prevExp:null,prevEstado:null,prevRonda:null,enviando:false,vista:"crear",hostErr:""};
-const ABC="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-const codigoSala=()=>Array.from({length:6},()=>ABC.charAt(Math.floor(Math.random()*ABC.length))).join("");
-const salaRef=()=>CO.db.doc("salas/"+CO.code);
-const jugRef=uid=>CO.db.doc("salas/"+CO.code+"/jugadores/"+uid);
-const accRef=uid=>CO.db.doc("salas/"+CO.code+"/acciones/"+uid);
-const clone=o=>JSON.parse(JSON.stringify(o));
-const pres=p=>{if(CO.r){try{CO.r.presence(p).catch(()=>{})}catch(e){}}};
-function coopInit(){
-  if(CO.ready)return CO.ready;
-  CO.ready=(async()=>{
-    CO.db=await claude_use("db");CO.user=await claude_use("user");
-    if(CO.user){try{CO.uid=await CO.user.id()}catch(e){}try{CO.canWrite=await CO.user.can("data.write")}catch(e){}}
-    CO.room=await claude_use("room");
-    CO.initDone=true;return !!(CO.db&&CO.uid);
-  })();
-  return CO.ready;
-}
-function coopOk(){return !!(CO.db&&CO.uid)&&CO.canWrite!==false}
-function coopMsgNoDisponible(){
-  if(!CO.db||!CO.uid)return "El modo cooperativo necesita abrir el juego dentro de Claude con la sesión iniciada.";
-  if(CO.canWrite===false)return "Para jugar en cooperativo, el dueño del juego tiene que compartírtelo como Colaborador (no solo como lector).";
-  return "";
-}
-function vivosSala(){return Object.values(CO.jug).filter(j=>j&&j.vivo)}
-function nombreDe(uid){const j=CO.jug[uid];return j?j.nombre:"alguien"}
-function online(uid){return CO.peers.some(p=>p.presence&&p.presence.uid===uid)}
-
-/* ---------- cambiar de modo ---------- */
-function setModo(m){
-  MODO=m;
-  document.querySelectorAll(".segm").forEach(b=>b.setAttribute("aria-checked",String(b.dataset.modo===m)));
-  document.body.classList.toggle("modo-coop",m==="coop");
-  $("tab-coop").setAttribute("aria-pressed",String(m==="coop"));
-  if(m==="coop"){
-    $("dock").hidden=true;
-    coopInit().then(()=>{cRenderBox();cShow(CO.sd&&CO.sd.estado==="jugando"&&CO.yo&&CO.yo.vivo?"juego":"crear")});
-    cShow("crear");cRenderBox();
-  } else {
-    $("cdock").hidden=true;$("v-cjuego").hidden=true;
-    try{const r=localStorage.getItem(COOPKEY);if(r)localStorage.setItem(COOPKEY,JSON.stringify(Object.assign(JSON.parse(r),{activo:false})))}catch(e){}
-    boot();
-  }
-}
-function cShow(view){
-  CO.vista=view;
-  ["crear","juego","ficha","caidos","cjuego"].forEach(v=>{$("v-"+v).hidden=true});
-  $("dock").hidden=true;$("cdock").hidden=true;
-  let target=view;
-  if(view==="juego")target=(CO.sd&&CO.sd.estado==="jugando"&&CO.yo&&CO.yo.vivo)?"cjuego":"crear";
-  const ve=$("v-"+target);ve.hidden=false;ve.classList.remove("vin");void ve.offsetWidth;ve.classList.add("vin");
-  [["juego","tab-juego"],["ficha","tab-ficha"],["caidos","tab-caidos"]].forEach(([v,id])=>$(id).setAttribute("aria-pressed",String(v===(view==="crear"?"juego":view))));
-  if(target==="cjuego"){$("cdock").hidden=false;if(CO.sd)Escena.start(CO.sd.mundo);cRenderLog(true);cRenderDock();cVitals()}
-  else if(target==="crear"){cRenderBox();$("vitals").hidden=true;document.body.classList.remove("lowhp")}
-  if(target==="ficha")cRenderFicha();
-  if(target==="caidos")cRenderCaidos();
-  if(target!=="cjuego")$("main").scrollTop=0;else cScrollEnd();
-}
-
-/* ---------- sala ---------- */
-async function crearSala(){
-  await coopInit();if(!coopOk()){cRenderBox();return}
-  const code=codigoSala();let esc=$("in-esc").value;if(esc==="__AZAR__")esc=pick(Object.keys(ESCENAS));
-  const sala={codigo:code,host:CO.uid,mundo:esc,dif:$("in-dif").value||"normal",rasgos:nuevoMundo(),estado:"esperando",ronda:0,dia:1,hora:"",clima:"",ubicacion:"",cronica:"",pnjs:[],temas:[],recientes:[],log:[],n:0,caidos:[],narrando:false,explosiones:0,creada:Date.now()};
-  try{await CO.db.doc("salas/"+code).set(sala)}catch(e){cAviso("No se pudo crear la sala. Inténtalo de nuevo.");return}
-  entrarSala(code);
-}
-async function unirseSala(code){
-  await coopInit();if(!coopOk()){cRenderBox();return}
-  code=String(code||"").toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,6);
-  if(code.length!==6){cAviso("El código tiene 6 letras o números.");return}
-  let s;try{s=await CO.db.doc("salas/"+code).get()}catch(e){cAviso("No se pudo comprobar la sala.");return}
-  if(!s.exists){cAviso("No existe ninguna sala con ese código.");return}
-  entrarSala(code);
-}
-function salirSala(){
-  CO.unsub.forEach(u=>{try{u()}catch(e){}});CO.unsub=[];
-  if(CO.r){try{CO.r.leave()}catch(e){}CO.r=null}
-  CO.code=null;CO.sd=null;CO.jug={};CO.acc={};CO.yo=null;CO.lastN=0;CO.prevYo=null;CO.prevDia=null;CO.prevPnjs=null;CO.prevExp=null;CO.prevEstado=null;CO.peers=[];
-  try{localStorage.removeItem(COOPKEY)}catch(e){}
-  $("clog").innerHTML="";cShow("crear");
-}
-function coopError(e){if(e&&e.code==="revoked"){cAviso("Se ha perdido el acceso a la sala.")}}
-async function entrarSala(code){
-  if(CO.code&&CO.code!==code)salirSala();
-  CO.code=code;try{localStorage.setItem(COOPKEY,JSON.stringify({code,activo:true}))}catch(e){}
-  CO.unsub.push(salaRef().onSnapshot(s=>{if(!s.exists){cAviso("La sala ya no existe.");return}CO.sd=clone(s.data());onSala()},coopError));
-  CO.unsub.push(CO.db.collection("salas/"+code+"/jugadores").onSnapshot(q=>{const m={};q.docs.forEach(d=>{m[d.id]=clone(d.data())});CO.jug=m;CO.yo=m[CO.uid]||null;onJug()},coopError));
-  CO.unsub.push(CO.db.collection("salas/"+code+"/acciones").onSnapshot(q=>{const m={};q.docs.forEach(d=>{m[d.id]=clone(d.data())});CO.acc=m;onAcc()},coopError));
-  if(CO.room){try{CO.r=await CO.room.join("sala-"+code);pres({uid:CO.uid,nombre:CO.yo?CO.yo.nombre:"",escribiendo:false});
-    CO.unsub.push(CO.r.onPeers(ch=>{CO.peers=ch.peers;cRenderBox();cRenderStatus()}))}catch(e){CO.r=null}}
-  cShow("crear");
-}
-
-/* ---------- reacciones a cambios ---------- */
-function onSala(){
-  const sd=CO.sd;CO.host=sd.host===CO.uid;
-  if(CO.prevDia!==null&&sd.dia>CO.prevDia){efecto("dawn");Sonido.amanecer();cine(3200);tarjeta("Sobrevivís otra noche","Día "+sd.dia,cap1([sd.clima,sd.ubicacion||sd.mundo].filter(Boolean).join(" · ")))}
-  if(CO.prevExp!==null&&(sd.explosiones||0)>CO.prevExp)Escena.explotar();
-  if(CO.prevPnjs){(sd.pnjs||[]).forEach(p=>{if(!CO.prevPnjs.includes(p.nombre))toast("Nuevo personaje",p.nombre,p.quien||"")})}
-  if(CO.prevEstado==="esperando"&&sd.estado==="jugando"){if(CO.yo&&CO.yo.vivo){cShow("juego");Sonido.impacto();cine(4200);temblor("shake");const a=sd.apertura||{};tarjeta(sd.mundo,"Día 1",[cap1(a.tiempo||""),cap1(a.lugar||"")].filter(Boolean).join(". "),3800,true)}}
-  if(CO.prevRonda!==null&&sd.ronda!==CO.prevRonda){CO.enviando=false;$("c-accion").value=""}
-  CO.prevDia=sd.dia;CO.prevExp=sd.explosiones||0;CO.prevPnjs=(sd.pnjs||[]).map(p=>p.nombre);CO.prevEstado=sd.estado;CO.prevRonda=sd.ronda;
-  if(CO.vista==="crear"||(CO.vista==="juego"&&$("v-crear").hidden===false))cRenderBox();
-  if(!$("v-cjuego").hidden){cRenderLog(false);cRenderDock();cVitals()}
-  if(!$("v-caidos").hidden)cRenderCaidos();
-  if(!$("v-ficha").hidden)cRenderFicha();
-  hostCheck();
-}
-function onJug(){
-  const yo=CO.yo,prev=CO.prevYo;
-  if(prev&&yo){
-    if(yo.pv<prev.pv&&yo.vivo){efecto("hit");Sonido.golpe();sangre(Math.min(7,prev.pv-yo.pv))}
-    if(yo.infeccion>prev.infeccion&&yo.vivo){temblor("sickfx");Sonido.infeccion();toast("Infección","+"+(yo.infeccion-prev.infeccion),"","bad")}
-    if((yo.inv||[]).length>(prev.inv||[]).length)toast("Encuentras",(yo.inv||[]).filter(x=>!(prev.inv||[]).includes(x)).join(" · ")||"algo","","good");
-    if(prev.vivo&&!yo.vivo)cMuerte();
-  }
-  CO.prevYo=yo?clone(yo):null;
-  if(yo)pres({uid:CO.uid,nombre:yo.nombre});
-  cRenderBox();
-  if(!$("v-cjuego").hidden){cRenderDock();cVitals()}
-  if(!$("v-ficha").hidden)cRenderFicha();
-  hostCheck();
-}
-function onAcc(){cRenderStatus();cRenderBox();hostCheck()}
-
-/* ---------- caja de sala en la pantalla de creación ---------- */
-function cAviso(t){const a=$("coop-aviso");if(a){a.textContent=t;a.hidden=!t}}
-function cRenderBox(){
-  const box=$("coopbox");if(!box)return;box.hidden=MODO!=="coop";if(MODO!=="coop")return;
-  box.innerHTML="";
-  const av=document.createElement("p");av.id="coop-aviso";av.className="hint err";av.hidden=true;
-  const formpj=$("formpj");
-  if(CO.initDone&&!coopOk()){
-    const p=document.createElement("p");p.className="small";p.style.margin="0";p.textContent=coopMsgNoDisponible()||"Comprobando…";box.appendChild(p);formpj.classList.add("oculto");return;
-  }
-  if(!CO.code){
-    formpj.classList.add("oculto");
-    const p=document.createElement("p");p.className="small";p.style.margin="0";p.textContent="Crea una sala y pasa el enlace a tus amigos, o entra en la de otro con su código. El escenario y la dificultad de abajo se usan al crear la sala.";
-    const r1=document.createElement("div");r1.className="row";
-    const bc=document.createElement("button");bc.className="btn";bc.type="button";bc.textContent="Crear sala";bc.onclick=crearSala;
-    r1.appendChild(bc);
-    const r2=document.createElement("div");r2.className="row";
-    const ic=document.createElement("input");ic.id="in-codigo";ic.maxLength=6;ic.placeholder="Código de sala";ic.autocomplete="off";ic.style.textTransform="uppercase";
-    if(CO.hashCode)ic.value=CO.hashCode;
-    const bu=document.createElement("button");bu.className="btn ghost";bu.type="button";bu.textContent="Unirse";bu.onclick=()=>unirseSala(ic.value);
-    r2.append(ic,bu);
-    box.append(p,r1,r2,av);
-    $("b-esc-field").hidden=false;$("b-dif-field").hidden=false;
-    return;
-  }
-  $("b-esc-field").hidden=true;$("b-dif-field").hidden=true;
-  const sd=CO.sd;
-  const head=document.createElement("div");head.className="salahead";
-  const cd=document.createElement("div");cd.className="salacode";cd.textContent=CO.code;
-  const meta=document.createElement("div");meta.className="small";meta.textContent=sd?`${sd.mundo} · ${(DIFS[sd.dif]||DIFS.normal).n} · ${sd.estado==="jugando"?"partida en marcha, ronda "+sd.ronda:"esperando jugadores"}`:"Conectando…";
-  head.append(cd,meta);
-  const link=ART_URL+"#"+CO.code;
-  const lr=document.createElement("div");lr.className="row";
-  const li=document.createElement("input");li.readOnly=true;li.value=link;li.id="in-link";
-  const lb=document.createElement("button");lb.className="btn ghost";lb.type="button";lb.textContent="Copiar enlace";
-  lb.onclick=()=>{const done=()=>{lb.textContent="Copiado";setTimeout(()=>lb.textContent="Copiar enlace",1800)};try{navigator.clipboard.writeText(link).then(done,()=>{li.select()})}catch(e){li.select()}};
-  lr.append(li,lb);
-  const nota=document.createElement("p");nota.className="small";nota.style.margin="0";nota.textContent="Tus amigos necesitan cuenta de Claude y que compartas el juego con ellos como Colaborador desde el menú Compartir. Luego abren el enlace o escriben el código.";
-  const lista=document.createElement("div");lista.className="plist";
-  const js=Object.values(CO.jug);
-  if(!js.length){const s=document.createElement("span");s.className="small";s.textContent="Aún no hay personajes en la sala.";lista.appendChild(s)}
-  js.forEach(j=>{const row=document.createElement("div");row.className="prow";
-    const dot=document.createElement("i");dot.className="dot"+(online(j.uid)||j.uid===CO.uid?" on":"");
-    const n=document.createElement("b");n.textContent=j.nombre;
-    const c=document.createElement("span");c.className="small";c.textContent=`${claseNombre(j.clase,j.genero)}${j.vivo?"":" · muerto"}${sd&&sd.host===j.uid?" · máster":""}${j.uid===CO.uid?" · tú":""}`;
-    row.append(dot,n,c);lista.appendChild(row)});
-  box.append(head,lr,nota,lista);
-  const acc=document.createElement("div");acc.className="rbar";
-  const tengoVivo=CO.yo&&CO.yo.vivo;
-  if(sd&&sd.estado==="esperando"&&CO.host){const be=document.createElement("button");be.className="btn";be.type="button";be.textContent="Empezar partida";be.disabled=!vivosSala().length;be.onclick=hostEmpezar;acc.appendChild(be)}
-  if(sd&&sd.estado==="esperando"&&!CO.host){const s=document.createElement("span");s.className="small";s.textContent="Esperando a que el máster empiece la partida…";acc.appendChild(s)}
-  if(sd&&sd.estado==="jugando"&&tengoVivo){const bj=document.createElement("button");bj.className="btn";bj.type="button";bj.textContent="Ir a la partida";bj.onclick=()=>cShow("juego");acc.appendChild(bj)}
-  const bs=document.createElement("button");bs.className="btn ghost";bs.type="button";bs.textContent="Salir de la sala";bs.onclick=salirSala;acc.appendChild(bs);
-  box.append(acc,av);
-  // formulario de personaje
-  const puedeCrear=!CO.yo||!CO.yo.vivo||(sd&&sd.estado==="esperando");
-  formpj.classList.toggle("oculto",!puedeCrear);
-  const bce=$("b-centrar");bce.textContent=CO.yo&&CO.yo.vivo?"Cambiar mi personaje":sd&&sd.estado==="jugando"?"Unirme a la partida con este personaje":"Entrar en la sala con este personaje";
-}
-async function guardarPjSala(){
-  if(!CO.code||!CO.sd){cAviso("Primero crea una sala o únete a una.");return}
-  if(!validarNombre()){const h=$("hint-nombre");h.textContent="Escribe un nombre para tu superviviente.";h.classList.add("err");$("in-nombre").focus();return}
-  const sd=CO.sd,c=CLASES[claseSel],dif=sd.dif||"normal";
-  const pj={uid:CO.uid,nombre:$("in-nombre").value.trim().slice(0,30),genero:generoSel,clase:claseSel,dif,a:Object.assign({},c.a),pvMax:c.pv,pv:c.pv,comida:c.com,agua:2,sustento:100,sueno:0,municion:c.mun,infeccion:0,inv:c.inv.slice(),usos:2,bonus:0,instinto:false,
-    pasado:$("in-pasado").value.trim().slice(0,90)||pick(PASADOS),objetivo:$("in-objetivo").value.trim().slice(0,90)||pick(OBJETIVOS),miedo:$("in-miedo").value.trim().slice(0,90)||pick(MIEDOS),
-    vivo:true,nuevo:sd.estado==="jugando",notas:[],turnos:0,causa:null,creado:Date.now()};
-  if(dif==="pesadilla"){pj.agua=1;pj.comida=Math.max(1,c.com-1);pj.municion=Math.floor(c.mun/2);pj.pvMax=pj.pv=c.pv-2}
-  if(dif==="facil"){pj.agua=3;pj.comida=c.com+1;pj.inv.push("Vendas")}
-  try{await jugRef(CO.uid).set(pj)}catch(e){cAviso("No se pudo guardar tu personaje. Comprueba que te han compartido el juego como Colaborador.");return}
-  CO.prevYo=clone(pj);
-  if(sd.estado==="jugando"){cShow("juego");toast("Te unes",pj.nombre,"Aparecerás en la próxima escena","good")}
-  else toast("Personaje listo",pj.nombre,"Espera a que empiece la partida","good");
-}
-
-/* ---------- vista de partida ---------- */
-function cScrollEnd(){const m=$("main");requestAnimationFrame(()=>{m.scrollTop=m.scrollHeight})}
-function cDraw(e,anim){
-  const d=document.createElement("div");d.className="entry "+e.tipo;if(!anim)d.style.animation="none";
-  if(e.tipo==="narr")setParas(d,e.texto);
-  else if(e.tipo==="tirada"){const t=document.createElement("span");t.className="tag "+e.res;t.textContent=RES_TXT[e.res]||e.res;const s=document.createElement("span");s.textContent=e.texto;d.append(t,s)}
-  else d.textContent=e.texto;
-  $("clog").appendChild(d);
-}
-function cRenderLog(full){
-  const log=(CO.sd&&CO.sd.log)||[];
-  if(full){$("clog").innerHTML="";log.forEach(e=>cDraw(e,false));CO.lastN=log.length?log[log.length-1].n:0;const t=$("cthink");if(t)$("clog").appendChild(t);cScrollEnd();return}
-  const nuevos=log.filter(e=>e.n>CO.lastN);
-  if(!nuevos.length)return;
-  const t=$("cthink");if(t)t.remove();
-  nuevos.forEach(e=>cDraw(e,true));CO.lastN=log[log.length-1].n;cScrollEnd();
-}
-function cVitals(){
-  if(!CO.yo)return;const p=S.pj,m=S.modo,w=S.mundo;
-  S.pj=clone(CO.yo);S.modo=CO.yo.vivo?"jugar":"muerto";S.mundo=(CO.sd&&CO.sd.mundo)||w;
-  if(CO.sd){S.pj.dia=CO.sd.dia;S.pj.hora=CO.sd.hora;S.pj.clima=CO.sd.clima;S.pj.ubicacion=CO.sd.ubicacion}
-  try{renderVitals()}finally{S.pj=p;S.modo=m;S.mundo=w}
-}
-function cRenderStatus(){
-  const st=$("cstatus");if(!st||!CO.sd)return;st.innerHTML="";
-  const sd=CO.sd,vivos=vivosSala(),yo=CO.yo;
-  const faltan=vivos.filter(j=>!(CO.acc[j.uid]&&CO.acc[j.uid].ronda===sd.ronda));
-  const yaYo=yo&&CO.acc[CO.uid]&&CO.acc[CO.uid].ronda===sd.ronda;
-  const t=document.createElement("span");
-  if(sd.narrando)t.textContent=`Ronda ${sd.ronda} · El máster narra…`;
-  else if(yo&&!yo.vivo)t.textContent="Has muerto. Puedes crear otro personaje desde la sala.";
-  else if(yaYo)t.textContent=`Ronda ${sd.ronda} · Tu acción está enviada.${faltan.length?" Esperando a: "+faltan.map(j=>j.nombre).join(", "):""}`;
-  else t.textContent=`Ronda ${sd.ronda} · Te toca: escribe qué hace ${yo?yo.nombre:"tu personaje"}.${faltan.length>1?" También faltan: "+faltan.filter(j=>j.uid!==CO.uid).map(j=>j.nombre).join(", "):""}`;
-  st.appendChild(t);
-  const esc=CO.peers.filter(p=>p.presence&&p.presence.escribiendo&&p.presence.uid!==CO.uid).map(p=>nombreDe(p.presence.uid));
-  if(esc.length){const e=document.createElement("span");e.className="small";e.textContent=" · "+esc.join(", ")+" está escribiendo…";st.appendChild(e)}
-  if(CO.host&&!sd.narrando&&sd.estado==="jugando"&&faltan.length&&faltan.length<vivos.length){const b=document.createElement("button");b.className="btn ghost mini";b.type="button";b.textContent="Narrar ya";b.title="No esperar a quien falta";b.onclick=()=>hostNarrar(false);st.appendChild(b)}
-  if(CO.host&&CO.hostErr){const b=document.createElement("button");b.className="btn ghost mini";b.type="button";b.textContent="Reintentar narración";b.onclick=()=>{CO.hostErr="";hostNarrar(sd.ronda===1&&!(sd.log||[]).length)};st.appendChild(b);const e=document.createElement("span");e.className="small";e.textContent=" "+CO.hostErr;st.appendChild(e)}
-  if(!CO.host&&CO.r&&sd.host&&!online(sd.host)&&CO.peers.length){const b=document.createElement("button");b.className="btn ghost mini";b.type="button";b.textContent="Ser yo el máster";b.title=`${nombreDe(sd.host)} no está conectado`;b.onclick=async()=>{try{await salaRef().update({host:CO.uid,narrando:false})}catch(e){}};st.appendChild(b)}
-}
-function cRenderDock(){
-  if(!CO.sd||!CO.yo)return;
-  cRenderStatus();
-  const sd=CO.sd,yo=CO.yo;
-  const yaYo=CO.acc[CO.uid]&&CO.acc[CO.uid].ronda===sd.ronda;
-  const bloqueado=!yo.vivo||sd.narrando||yaYo||CO.enviando||sd.estado!=="jugando";
-  $("c-accion").disabled=bloqueado;$("c-hacer").disabled=bloqueado;
-  // habilidad y mochila
-  const el=$("cability");el.innerHTML="";const c=CLASES[yo.clase];
-  const b=document.createElement("button");b.className="btn ghost";b.type="button";const activo=yo.bonus||yo.instinto;
-  b.textContent=c.hab+" ("+(yo.usos||0)+"/2)";b.disabled=!yo.vivo||(yo.usos||0)<=0||activo||sd.narrando;b.onclick=cUsarHab;
-  const s=document.createElement("span");s.textContent=activo?"Activa en tu próxima tirada.":c.habDesc;
-  const nUs=(yo.inv||[]).filter(usoDe).length;
-  const mb=document.createElement("button");mb.type="button";mb.className="btn ghost";mb.textContent="Mochila ("+nUs+")";mb.onclick=()=>{const bag=$("cbag");bag.hidden=!bag.hidden;cRenderBag()};
-  el.append(b,s,mb);
-  cRenderBag();
-}
-async function cGuardarYo(campos,nota){
-  const yo=CO.yo;if(!yo)return;Object.assign(yo,campos);
-  if(nota){yo.notas=(yo.notas||[]).concat([nota]).slice(-6);campos.notas=yo.notas}
-  try{await jugRef(CO.uid).update(campos)}catch(e){toast("Error","No se pudo guardar","","bad")}
-  cRenderDock();cVitals();
-}
-function cUsarHab(){
-  const yo=CO.yo;if(!yo||!yo.vivo||(yo.usos||0)<=0)return;const pj=clone(yo);iniNec(pj);pj.usos--;let msg="";
-  if(["soldado","mecanico","policia","profesora","informatico","sacerdote","electricista","exconvicto"].includes(pj.clase)){pj.bonus=2;msg="+2 a tu próxima tirada"}
-  else if(["exploradora","deportista","cazador"].includes(pj.clase)){pj.instinto=true;msg="tu próxima tirada lanza 3d6"}
-  else if(pj.clase==="cocinero"){if(pj.sustento>=95){toast(CLASES[pj.clase].hab,"Estás bien alimentado","");return}pj.sustento=Math.min(100,pj.sustento+25);msg="Sustento +25%"}
-  else if(pj.clase==="medica"||pj.clase==="veterinaria"){const cur=pj.clase==="medica"?3:2;if(pj.infeccion>0&&pj.pv>pj.pvMax/2){pj.infeccion--;msg="Infección −1"}else{const c=Math.min(cur,pj.pvMax-pj.pv);pj.pv+=c;msg="+"+c+" PV"}}
-  else if(pj.clase==="bombera"||pj.clase==="camionero"){const c=Math.min(3,pj.pvMax-pj.pv);pj.pv+=c;msg="+"+c+" PV"}
-  else if(pj.clase==="granjero"){const n=Math.random()<.4?2:1;pj.comida+=n;msg="Comida +"+n}
-  else if(pj.clase==="ladron"||pj.clase==="carronero"){const r=Math.random();if(r<.4){pj.comida++;msg="Comida +1"}else if(r<.8){pj.municion+=3;msg="Munición +3"}else{const it=pick(["Encendedor","Walkie-talkie","Analgésicos","Cuchillo","Bengala","Mapa arrugado"]);pj.inv=(pj.inv||[]).concat([it]);msg="+ "+it}}
-  toast(CLASES[pj.clase].hab,msg,"","good");Sonido.hallazgo();
-  cGuardarYo({usos:pj.usos,bonus:pj.bonus||0,instinto:!!pj.instinto,pv:pj.pv,infeccion:pj.infeccion,comida:pj.comida,municion:pj.municion,sustento:pj.sustento,inv:pj.inv},`usó su habilidad ${CLASES[pj.clase].hab} (${msg})`);
-}
-function cRenderBag(){
-  const b=$("cbag");if(!b||b.hidden||!CO.yo)return;b.innerHTML="";const pj=CO.yo;
-  const top=document.createElement("div");top.className="bagitem";
-  const tt=document.createElement("span");tt.textContent=`Comida ${pj.comida} · Agua ${pj.agua||0}`;
-  const g=document.createElement("div");g.style.display="flex";g.style.gap="6px";
-  [["Comer","comida"],["Beber","agua"]].forEach(([lab,res])=>{const bt=document.createElement("button");bt.className="btn ghost mini";bt.type="button";bt.textContent=lab;bt.disabled=!pj.vivo;bt.onclick=()=>cAlimentar(res);g.appendChild(bt)});
-  top.append(tt,g);b.appendChild(top);
-  (pj.inv||[]).map((it,i)=>[it,i,usoDe(it)]).filter(x=>x[2]).forEach(([it,i,u])=>{const row=document.createElement("div");row.className="bagitem";
-    const t=document.createElement("span");const bb=document.createElement("b");bb.textContent=it;t.append(bb," · "+u.txt);
-    const btn=document.createElement("button");btn.className="btn ghost mini";btn.type="button";btn.textContent="Usar";btn.disabled=!pj.vivo;btn.onclick=()=>cUsarObjeto(i);row.append(t,btn);b.appendChild(row)});
-}
-function cAlimentar(res){
-  const pj=clone(CO.yo);iniNec(pj);
-  if((pj[res]||0)<=0){toast("Mochila",res==="comida"?"No te queda comida":"No te queda agua","");return}
-  if(pj.sustento>=95){toast("Mochila","Estás bien alimentado","");return}
-  pj[res]--;pj.sustento=Math.min(100,pj.sustento+SUST[res]);
-  toast(res==="comida"?"Comes":"Bebes","Sustento +"+SUST[res]+"%","","good");
-  cGuardarYo({[res]:pj[res],sustento:pj.sustento},res==="comida"?"comió algo de su mochila":"bebió agua de su mochila");
-}
-function cUsarObjeto(i){
-  const pj=clone(CO.yo);iniNec(pj);const it=pj.inv[i];const u=usoDe(it);if(!u)return;let r="";
-  if(u.pv){if(pj.pv>=pj.pvMax){toast("Mochila","No te hace falta","");return}const c=Math.min(u.pv,pj.pvMax-pj.pv);pj.pv+=c;r="PV +"+c}
-  if(u.inf){if(pj.infeccion===0){toast("Mochila","No tienes infección","");return}if(pj.infeccion>u.max)r="no hace efecto";else{pj.infeccion--;r="Infección −1"}}
-  if(u.comida){pj.comida+=u.comida;r="Comida +"+u.comida}
-  if(u.mun){pj.municion+=u.mun;r="Munición +"+u.mun}
-  if(u.agua){pj.agua=(pj.agua||0)+u.agua;r="Agua +"+u.agua}
-  pj.inv.splice(i,1);toast("Usas "+it,r,"","good");
-  cGuardarYo({pv:pj.pv,infeccion:pj.infeccion,comida:pj.comida,municion:pj.municion,agua:pj.agua,inv:pj.inv},`usó ${it} (${r})`);
-}
-function cAnimar(vals){
-  const els=[$("cd1"),$("cd2"),$("cd3")];els[2].hidden=vals.length<3;els.forEach(e=>e.classList.remove("off","landed"));
-  return new Promise(res=>{if(reduced){vals.forEach((v,i)=>face(els[i],v));return res()}
-    els.slice(0,vals.length).forEach(e=>e.classList.add("rolling"));let n=0;
-    const t=setInterval(()=>{vals.forEach((v,i)=>face(els[i],d6()));if(++n>9){clearInterval(t);els.forEach(e=>e.classList.remove("rolling"));vals.forEach((v,i)=>{face(els[i],v);void els[i].offsetWidth;els[i].classList.add("landed")});res()}},70)});
-}
-async function cEnviar(texto){
-  const sd=CO.sd,yo=CO.yo;texto=String(texto||"").trim();if(!texto||!sd||!yo||!yo.vivo||sd.narrando||sd.estado!=="jugando")return;
-  if(CO.acc[CO.uid]&&CO.acc[CO.uid].ronda===sd.ronda)return;
-  CO.enviando=true;cRenderDock();
-  let atributo="AUTO",mod=0,motivo="";
-  if(sample&&!/^uso:/i.test(texto)){
-    $("ctray").textContent="El máster valora la dificultad…";
-    const p=S.pj,rc=S.recientes;S.pj=clone(yo);S.pj.hora=sd.hora;S.pj.clima=sd.clima;S.recientes=sd.recientes||[];let pr;
-    try{pr=valorar(texto)}finally{S.pj=p;S.recientes=rc}
-    const v=await pr;if(v){mod=num(v.mod,-3,1);motivo=v.motivo?String(v.motivo).slice(0,60):"";atributo=v.tirada===false?"NINGUNO":(ATTR[v.atributo]?v.atributo:autoAttr(texto))}
-  }
-  if(atributo==="AUTO")atributo=autoAttr(texto);
-  let roll=null;
-  if(atributo!=="NINGUNO"){
-    const p=S.pj;const pj=clone(yo);S.pj=pj;try{roll=tirar(atributo,mod)}finally{S.pj=p}
-    $("ctray").textContent="Tirando…";Sonido.dados();await cAnimar(roll.vals);
-    if(roll.drop>=0)$(["cd1","cd2","cd3"][roll.drop]).classList.add("off");
-    const ti=$("ctray");ti.innerHTML="";const b=document.createElement("b");b.textContent=roll.total;ti.append(b," "+RES_TXT[roll.res]+" · "+ATTR[atributo]);
-    if(roll.res==="CRITICO"){efecto("crit");sello("CRITICO")}if(roll.res==="DESASTRE"){Sonido.golpe();sello("DESASTRE")}
-    if(yo.bonus||yo.instinto){try{await jugRef(CO.uid).update({bonus:0,instinto:false})}catch(e){}}
-  } else $("ctray").textContent="Sin tirada.";
-  const r=roll?{atributo,res:roll.res,total:roll.total,mod:roll.mod,kept:roll.kept,pens:roll.pens,bonus:roll.bonus,exito:roll.exito,parcial:roll.parcial,at:roll.at}:null;
-  try{await accRef(CO.uid).set({uid:CO.uid,nombre:yo.nombre,ronda:sd.ronda,texto:texto.slice(0,600),roll:r,motivo,ts:Date.now()})}
-  catch(e){CO.enviando=false;toast("Error","No se pudo enviar tu acción","Inténtalo otra vez","bad");cRenderDock();return}
-  $("c-accion").value="";pres({escribiendo:false});
-  CO.enviando=false;cRenderDock();
-}
-function cMuerte(){
-  const yo=CO.yo;muerteFx(yo.nombre);sangre(9);Sonido.muerte();cine(4800);
-  setTimeout(()=>{
-    const box=document.createElement("div");box.className="dead";
-    const h=document.createElement("h2");h.textContent=yo.nombre+" ha muerto";
-    const p=document.createElement("p");p.style.margin="0";p.textContent=yo.causa||"Cayó, y el grupo tuvo que seguir sin él.";
-    const b=document.createElement("button");b.className="btn";b.textContent="Crear otro personaje";b.onclick=()=>{$("in-nombre").value="";["pasado","objetivo","miedo"].forEach(k=>$("in-"+k).value="");["pasado","objetivo","miedo"].forEach(sortearTras);validarNombre();cShow("crear")};
-    box.append(h,p,b);$("clog").appendChild(box);cScrollEnd();cRenderDock();
-  },reduced?0:3600);
-}
-
-/* ---------- ficha y caídos en cooperativo ---------- */
-function cRenderFicha(){
-  const v=$("v-ficha");v.innerHTML="";const pj=CO.yo,sd=CO.sd;
-  if(!pj){const p=document.createElement("p");p.className="small";p.textContent="Aún no tienes personaje en esta sala.";v.appendChild(p);return}
-  const h=document.createElement("h2");h.className="h";h.textContent=pj.nombre;
-  const sub=document.createElement("p");sub.className="small";sub.style.margin="0";sub.textContent=`${claseNombre(pj.clase,pj.genero)} · ${sd?sd.mundo:""} · Sala ${CO.code} · ${pj.turnos||0} rondas`;
-  const st=document.createElement("div");st.className="stats";st.style.maxWidth="380px";
-  Object.keys(ATTR).forEach(a=>{const s=document.createElement("span");const bb=document.createElement("b");bb.textContent=(pj.a[a]>0?"+":"")+pj.a[a];s.append(bb,ATTR[a]);st.appendChild(s)});
-  const tf=document.createElement("div");tf.className="world";
-  [["Antes del brote",pj.pasado],["Busca",pj.objetivo],["Teme",pj.miedo]].forEach(([k,val])=>{if(!val)return;const d=document.createElement("div");const b=document.createElement("b");b.textContent=k+": ";d.append(b,val);tf.appendChild(d)});
-  const ih=document.createElement("div");ih.className="field";const il=document.createElement("span");il.className="lbl";il.textContent="Inventario · los objetos en verde se usan al tocarlos";ih.appendChild(il);
-  const inv=document.createElement("div");inv.className="inv";
-  (pj.inv||[]).forEach((it,i)=>{const b=document.createElement("button");const u=usoDe(it);b.textContent=it+(u?" · "+u.txt:"");if(u){b.className="usable";b.onclick=()=>{if(pj.vivo)cUsarObjeto(i)}}inv.appendChild(b)});
-  ih.appendChild(inv);
-  const nh=document.createElement("div");nh.className="field";const nl=document.createElement("span");nl.className="lbl";nl.textContent="Personajes conocidos por el grupo";nh.appendChild(nl);
-  if(sd&&(sd.pnjs||[]).length)nh.appendChild(npcList(sd.pnjs));else{const p=document.createElement("span");p.className="small";p.textContent="Todavía nadie.";nh.appendChild(p)}
-  const mw=document.createElement("div");mw.className="field";const ml=document.createElement("span");ml.className="lbl";ml.textContent="Este mundo";mw.appendChild(ml);
-  const wl=document.createElement("div");wl.className="world";
-  if(sd&&sd.rasgos)[["Origen",sd.rasgos.brote],["Los muertos",sd.rasgos.muertos],["Peligro humano",sd.rasgos.amenaza],["Se rumorea que",sd.rasgos.rumor]].forEach(([k,val])=>{const d=document.createElement("div");const b=document.createElement("b");b.textContent=k+": ";d.append(b,val);wl.appendChild(d)});
-  mw.appendChild(wl);
-  const ch=document.createElement("div");ch.className="field";const cl=document.createElement("span");cl.className="lbl";cl.textContent="Crónica del grupo";ch.appendChild(cl);
-  const cp=document.createElement("p");cp.className="chron";cp.textContent=(sd&&sd.cronica)||"Aún no ha pasado nada digno de contar.";ch.appendChild(cp);
-  v.append(h,sub,tf,st,ih,nh,mw,ch);
-}
-function cRenderCaidos(){
-  const v=$("v-caidos");v.innerHTML="";const box=document.createElement("div");box.className="paper stack";
-  const h=document.createElement("h2");h.className="h";h.textContent="Caídos de la sala";box.appendChild(h);
-  const cs=(CO.sd&&CO.sd.caidos)||[];
-  if(!cs.length){const p=document.createElement("p");p.className="small";p.style.margin="0";p.textContent="Nadie del grupo ha muerto todavía.";box.appendChild(p)}
-  cs.slice().reverse().forEach(c=>{const g=document.createElement("div");g.className="grave";const b=document.createElement("b");b.textContent=c.nombre;
-    const m=document.createElement("div");m.className="m";m.textContent=`${c.clase} · día ${c.dia} · ${c.rondas||0} rondas`;const p=document.createElement("p");p.textContent=c.causa;g.append(b,m,p);box.appendChild(g)});
-  v.appendChild(box);
-}
-
-/* ---------- el máster (lo ejecuta el navegador del anfitrión) ---------- */
-function hostCheck(){
-  if(!CO.host||CO.hostBusy||CO.hostErr||!CO.sd||CO.sd.estado!=="jugando"||CO.sd.narrando||CO.sd.ronda===CO.lastNarrated)return;
-  const vivos=vivosSala();if(!vivos.length)return;
-  const listos=vivos.filter(j=>CO.acc[j.uid]&&CO.acc[j.uid].ronda===CO.sd.ronda);
-  if(listos.length===vivos.length&&listos.length)hostNarrar(false);
-}
-async function hostEmpezar(){
-  if(!CO.host||!CO.sd||!vivosSala().length)return;
-  const ap=nuevaApertura(CO.sd.mundo);
-  try{await salaRef().update({estado:"jugando",ronda:1,apertura:ap,hora:ap.hora,clima:ap.clima,dia:1})}catch(e){cAviso("No se pudo empezar la partida.");return}
-  CO.sd=Object.assign({},CO.sd,{estado:"jugando",ronda:1,apertura:ap,hora:ap.hora,clima:ap.clima,dia:1});
-  hostNarrar(true);
-}
-function promptCoop(sd,vivos,acts,inicio){
-  const R=sd.rasgos||{};
-  const fichas=vivos.map(j=>`- ${j.nombre} (${j.genero==="mujer"?"mujer":"hombre"}, ${claseNombre(j.clase,j.genero).toLowerCase()}): PV ${j.pv}/${j.pvMax} (${estadoHeridas(j).n}), infección ${j.infeccion}/6, ${textoNec(j)}, comida ${j.comida}, agua ${j.agua||0}, munición ${j.municion}. Lleva: ${(j.inv||[]).join(", ")||"nada"}. Antes del brote era ${j.pasado}. Busca ${j.objetivo}. Teme ${j.miedo}.${j.nuevo&&!inicio?" ACABA DE LLEGAR: haz que aparezca o se una al grupo de forma lógica en esta escena.":""}${(j.notas&&j.notas.length)?" Desde la última ronda: "+j.notas.join("; ")+".":""}`).join("\n");
-  const pnjs=(sd.pnjs||[]).map(n=>`- ${n.nombre}: ${n.quien||""} | ${n.estado||"vivo"} | actitud ${n.actitud||"?"} | relación con el grupo: ${n.relacion||"ninguna aún"}${n.nota?" | "+n.nota:""}`).join("\n")||"ninguno todavía";
-  const rec=(sd.recientes||[]).slice(-5).map(r=>`• ${r.acciones}\n  ${r.narr}`).join("\n")||"(es el inicio)";
-  const caidos=(sd.caidos||[]).slice(-4).map(c=>`${c.nombre} (${c.clase}): ${c.causa}`).join("\n")||"ninguno";
-  const temas=(sd.temas||[]).slice(-20).join("; ")||"ninguna";
-  let ahora;
-  if(inicio){const a=sd.apertura||{};ahora=`Es el comienzo de la partida. Situación inicial elegida al azar, que debes respetar y desarrollar con lógica: ${a.tiempo}, ${a.momento} (${a.clima}). Lugar: ${a.lugar}. Qué estaban haciendo: ${a.circ}. Qué pasa justo ahora: ${a.problema}.
-Los personajes de los jugadores están juntos o a punto de encontrarse; explica en una pincelada, con lógica, por qué están ahí y qué les une. Empieza en mitad de la acción (nada de "despertáis"), presenta a cada uno con un detalle y detente en un momento abierto. No hay tiradas.`}
-  else ahora=vivos.map(j=>{const a=acts[j.uid];if(!a)return `- ${j.nombre}: no ha hecho nada esta ronda (se queda atrás, duda o sigue al grupo sin decir nada).`;
-    let t=`- ${j.nombre} (escrito por su jugador): «${a.texto}».`;
-    if(a.roll){t+=` Tirada de ${ATTR[a.roll.atributo]}: ${RES_TXT[a.roll.res]} (dificultad ${MOD_TXT[String(a.roll.mod)]||"normal"}).`;
-      if(["PARCIAL","FALLO","DESASTRE"].includes(a.roll.res)){const p=precio(a.roll.mod,a.roll.res);t+=` Precio que debe pagar: ${p[0]} (${p[1]}).`}
-      else if(a.roll.res==="EXITO"&&a.roll.mod<=-2)t+=" Ha superado algo muy difícil: que se note.";}
-    else t+=" Sin tirada: ocurre tal cual lo ha escrito.";
-    return t}).join("\n");
-  const nombres=vivos.map(j=>j.nombre).join(", ");
-  return `Eres el MÁSTER de "Tierra Muerta", una partida COOPERATIVA de rol de terror y supervivencia en un apocalipsis zombi. Juegan varias personas a la vez, cada una con su personaje. Eres un máster veterano: justo con los dados, imprevisible y coherente.
-
-ESTILO
-- Español de España, presente. Habla al grupo en segunda persona del plural cuando estén juntos y nombra a cada personaje cuando hagan cosas distintas. Entre 160 y 300 palabras.
-- Lo primero es que todos entiendan la situación: dónde están, quién hay, qué amenaza, a qué distancia, qué salidas. Frases cortas, palabras normales, detalles concretos. Nada de metáforas recargadas ni frases hechas ("un escalofrío recorre", "silencio ensordecedor"), ni "no es X, es Y", ni frases solemnes al final.
-- Diálogos realistas en su propio párrafo con raya: frases cortas, a medias, interrupciones, tacos con miedo o rabia, cada personaje con su forma de hablar. Nada de discursos.
-- Los personajes de los jugadores solo dicen y hacen lo que sus jugadores han escrito. No inventes sus decisiones ni sus palabras.
-- Termina en un momento abierto, sin ofrecer opciones ni preguntar "¿qué hacéis?".
-
-REGLAS DE LA RONDA
-- Combina las acciones de todos en UNA escena con orden lógico (lo rápido antes que lo lento; lo que hace uno puede ayudar o estorbar a otro).
-- Respeta cada acción al pie de la letra, con su tirada: si alguien falla, el fallo le ocurre a él, y puede salpicar al grupo si tiene sentido.
-- Si una acción es imposible, muéstralo en la escena sin castigo extra.
-- Consecuencias proporcionadas que se recuerdan. Relaciones con los personajes del mundo: confianza que se gana con hechos, rivalidades, romance solo entre adultos y escenas íntimas con elipsis.
-
-LÓGICA DEL MUNDO (fija)
-- Origen del brote: ${R.brote}. Los muertos aquí son ${R.muertos}. Amenaza humana: ${R.amenaza}. Rumor: ${R.rumor} (verdad o mentira, decide y mantenlo).
-- Los muertos se guían por ruido, luz y sangre. Una mordedura o arañazo profundo de un muerto infecta. Nada aparece porque sí. El tiempo pasa y la hora importa.
-- Heridas SOLO si se narran de verdad, con tipo y gravedad; el juego calcula los PV. Necesidades: sustento (comida y bebida) y sueño; que se noten si están mal. Comer, beber y dormir solo si ocurre en la narración.
-
-ESCENARIO: ${sd.mundo}. Día ${sd.dia}, ${sd.hora||"hora por decidir"}, ${sd.clima||"tiempo por decidir"}. Lugar: ${sd.ubicacion||"por decidir"}.
-PERSONAJES DE LOS JUGADORES:
-${fichas}
-PERSONAJES CONOCIDOS:
-${pnjs}
-CAÍDOS DEL GRUPO: ${caidos}
-CRÓNICA: ${sd.cronica||"(vacía)"}
-ÚLTIMAS RONDAS:
-${rec}
-SITUACIONES YA USADAS (no las repitas): ${temas}.
-Si introduces a alguien nuevo, usa uno de estos nombres: ${nombresSugeridos()}.
-
-FORMATO: después de la narración escribe una línea con ${MARK} y debajo SOLO este JSON:
-{"tema":"situación de esta ronda en 3-6 palabras","cronica":"resumen acumulado de toda la partida en 4-7 frases","ubicacion":"lugar breve","hora":"madrugada|amanecer|mañana|mediodía|tarde|anochecer|noche","clima":"1-3 palabras","dia_pasa":false,"explosion":false,"personajes":[{"nombre":"","quien":"","actitud":"aliado|neutral|hostil|desconocida","estado":"vivo|herido|muerto|zombi|desaparecido","relacion":"relación con el grupo en 1-3 palabras","nota":""}],"jugadores":{"NOMBRE EXACTO":{"accion_resuelta":"","heridas":[{"tipo":"mordedura|arañazo|corte|golpe|caida|disparo|quemadura|otro","gravedad":"leve|grave|critica","de_muerto":false,"donde":""}],"curacion":0,"desinfeccion":0,"comio":false,"bebio":false,"durmio":"no|poco|bien","comida":0,"agua":0,"municion":0,"ganar":[],"perder":[],"causa":""}}}
-"jugadores" incluye a TODOS (${nombres}) con su nombre exacto. "heridas" vacío si no hay herida narrada. comida, agua y municion son CAMBIOS. "dia_pasa" true solo si pasan la noche y amanece. "explosion" true solo si algo explota de verdad. "personajes" solo los que aparecen o cambian. No escribas nada después del JSON.
-
-=== LO QUE PASA AHORA (lo más importante) ===
-${ahora}`;
-}
-function cMergePnjs(lista,act){
-  const out=clone(lista||[]);
-  (Array.isArray(act)?act:[]).slice(0,5).forEach(n=>{if(!n||!n.nombre)return;const nombre=String(n.nombre).trim().slice(0,40);if(!nombre)return;
-    let p=out.find(x=>x.nombre.toLowerCase()===nombre.toLowerCase());if(!p){p={nombre};out.push(p)}
-    ["quien","actitud","estado","nota","relacion"].forEach(k=>{if(n[k])p[k]=String(n[k]).slice(0,140)})});
-  while(out.length>20){const i=out.findIndex(x=>x.estado==="muerto");out.splice(i>=0?i:0,1)}
-  return out;
-}
-function datosDe(d,nombre){
-  const js=d&&d.jugadores&&typeof d.jugadores==="object"?d.jugadores:{};const n=nombre.toLowerCase();
-  const k=Object.keys(js).find(x=>x.trim().toLowerCase()===n)||Object.keys(js).find(x=>x.toLowerCase().includes(n)||n.includes(x.toLowerCase().trim()));
-  return k?js[k]||{}:{};
-}
-function hostAplicar(j,dj,diaPasa){
-  const pj=clone(j);iniNec(pj);const cambios=[];S.causaNec=null;
-  const [dpv,di]=calcularHeridas(dj,cambios);
-  if(dpv)pj.pv=Math.min(pj.pvMax,pj.pv+dpv);
-  if(di)pj.infeccion=Math.max(0,Math.min(6,pj.infeccion+di));
-  const dc=num(dj.comida,-3,3),dm=num(dj.municion,-10,10),da=num(dj.agua,-3,4);
-  if(dc){pj.comida=Math.max(0,pj.comida+dc);cambios.push(`Comida ${dc>0?"+":""}${dc}`)}
-  if(dm){pj.municion=Math.max(0,pj.municion+dm);cambios.push(`Munición ${dm>0?"+":""}${dm}`)}
-  if(da){pj.agua=Math.max(0,(pj.agua||0)+da);cambios.push(`Agua ${da>0?"+":""}${da}`)}
-  pj.inv=pj.inv||[];
-  (Array.isArray(dj.perder)?dj.perder:[]).slice(0,4).forEach(x=>{x=String(x).trim().toLowerCase();if(!x)return;const i=pj.inv.findIndex(y=>{y=y.toLowerCase();return y===x||y.includes(x)||x.includes(y)});if(i>=0){cambios.push("− "+pj.inv[i]);pj.inv.splice(i,1)}});
-  (Array.isArray(dj.ganar)?dj.ganar:[]).slice(0,3).forEach(x=>{x=String(x).trim().slice(0,40);if(x&&pj.inv.length<12){pj.inv.push(x);cambios.push("+ "+x)}});
-  tickNec(pj,cambios);satisfacer(pj,dj,cambios);
-  if(diaPasa){pj.usos=2;if(pj.infeccion>=3){pj.infeccion++;cambios.push("La fiebre avanza: Infección +1")}}
-  pj.turnos=(pj.turnos||0)+1;pj.nuevo=false;pj.notas=[];
-  let muerto=false;
-  if(pj.pv<=0||pj.infeccion>=6){muerto=true;pj.vivo=false;
-    pj.causa=pj.infeccion>=6?"La infección terminó el trabajo. Se levantó una última vez, pero ya no era quien era.":(S.causaNec&&!(Array.isArray(dj.heridas)&&dj.heridas.length))?S.causaNec:(dj.causa?String(dj.causa).slice(0,240):"Cayó luchando, y el grupo tuvo que seguir sin poder pararse.")}
-  return{pj,cambios,muerto};
-}
-async function hostNarrar(inicio){
-  if(!CO.host||CO.hostBusy||!CO.sd)return;
-  if(!sample&&samplePromise)sample=await samplePromise;
-  if(!sample){CO.hostErr="El máster IA no está disponible en tu navegador.";cRenderStatus();return}
-  CO.hostBusy=true;const sd=clone(CO.sd);const vivos=vivosSala().map(clone);const acts={};
-  vivos.forEach(j=>{const a=CO.acc[j.uid];if(a&&a.ronda===sd.ronda)acts[j.uid]=clone(a)});
-  try{await salaRef().update({narrando:true})}catch(e){}
-  let th=$("cthink");if(!th){th=document.createElement("div");th.id="cthink";th.className="entry narr"}th.innerHTML='<div class="thinking">El máster piensa</div>';$("clog").appendChild(th);cScrollEnd();
-  let texto,d;
-  try{
-    const r=await sample(promptCoop(sd,vivos,acts,inicio),{cache:false,modelTier:"default",effort:"low",onText:({text})=>{const vis=text.split(MARK)[0].replace(/#+\s*$/,"");if(vis.trim()){setParas(th,vis);cScrollEnd()}}});
-    [texto,d]=parse(r.text);
-  }catch(e){
-    th.remove();CO.hostBusy=false;CO.hostErr=e&&e.code==="rate_limited"?"Has llegado al límite de uso; espera un rato.":"La narración se cortó.";
-    try{await salaRef().update({narrando:false})}catch(x){}
-    cRenderStatus();return;
-  }
-  let n=sd.n||0;const log=(sd.log||[]).slice();const add=e=>{n++;e.n=n;log.push(e)};
-  if(!inicio)vivos.forEach(j=>{const a=acts[j.uid];if(!a)return;add({tipo:"accion",texto:"› "+j.nombre+": "+a.texto});
-    if(a.roll)add({tipo:"tirada",res:a.roll.res,texto:`${j.nombre} · ${ATTR[a.roll.atributo]} · ${MOD_TXT[String(a.roll.mod)]||"normal"} = ${a.roll.total}${a.motivo?" · "+a.motivo:""}`})});
-  add({tipo:"narr",texto});
-  const diaPasa=d.dia_pasa===true||d.dia_pasa==="true";
-  const caidos=(sd.caidos||[]).slice();
-  for(const j of vivos){
-    const res=hostAplicar(j,datosDe(d,j.nombre),diaPasa);
-    if(res.cambios.length)add({tipo:"sistema",texto:j.nombre+": "+res.cambios.join(" · ")});
-    if(res.muerto){add({tipo:"sistema",texto:"✝ "+j.nombre+" ha muerto. "+res.pj.causa});caidos.push({nombre:j.nombre,clase:claseNombre(j.clase,j.genero),dia:sd.dia,rondas:res.pj.turnos,causa:res.pj.causa})}
-    const p=res.pj;
-    try{await jugRef(j.uid).update({pv:p.pv,infeccion:p.infeccion,comida:p.comida,agua:p.agua,municion:p.municion,inv:p.inv,sustento:p.sustento,sueno:p.sueno,usos:p.usos,turnos:p.turnos,nuevo:false,notas:[],vivo:p.vivo,causa:p.causa||null})}catch(e){}
-  }
-  const temas=(sd.temas||[]).slice();if(d.tema){temas.push(String(d.tema).slice(0,60));while(temas.length>30)temas.shift()}
-  const recientes=(sd.recientes||[]).slice();recientes.push({acciones:inicio?"(inicio)":vivos.map(j=>acts[j.uid]?j.nombre+": "+acts[j.uid].texto:j.nombre+": nada").join(" | ").slice(0,600),narr:texto.slice(0,800)});while(recientes.length>6)recientes.shift();
-  const upd={log:log.slice(-120),n,ronda:inicio?1:sd.ronda+1,narrando:false,cronica:d.cronica?String(d.cronica).slice(0,1400):sd.cronica,ubicacion:d.ubicacion?String(d.ubicacion).slice(0,60):sd.ubicacion,
-    hora:d.hora&&HORAS.includes(String(d.hora).toLowerCase())?String(d.hora).toLowerCase():(diaPasa?"amanecer":sd.hora),clima:d.clima?String(d.clima).slice(0,30):sd.clima,dia:diaPasa?(sd.dia||1)+1:(sd.dia||1),
-    pnjs:cMergePnjs(sd.pnjs,d.personajes),temas,recientes,caidos,explosiones:(sd.explosiones||0)+((d.explosion===true||d.explosion==="true")?1:0)};
-  try{await salaRef().update(upd)}catch(e){CO.hostErr="No se pudo guardar la ronda.";try{await salaRef().update({narrando:false})}catch(x){}}
-  CO.lastNarrated=inicio?0:sd.ronda;th.remove();CO.hostBusy=false;cRenderStatus();
-}
-
-/* ---------- arranque del modo cooperativo ---------- */
-document.querySelectorAll(".segm").forEach(b=>b.onclick=()=>setModo(b.dataset.modo));
-$("tab-coop").onclick=()=>setModo(MODO==="coop"?"solo":"coop");
-$("b-centrar").onclick=guardarPjSala;
-$("c-accion").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey&&!e.isComposing){e.preventDefault();$("cfree").requestSubmit()}});
-$("c-accion").addEventListener("input",()=>{if(!CO.r)return;pres({escribiendo:true});clearTimeout(CO.escT);CO.escT=setTimeout(()=>pres({escribiendo:false}),3000)});
-$("cfree").addEventListener("submit",e=>{e.preventDefault();cEnviar($("c-accion").value)});
-[$("cd1"),$("cd2")].forEach(e=>face(e,6));
-function coopArranque(){
-  let code=null;
-  const h=(location.hash||"").replace("#","").toUpperCase();if(/^[A-Z0-9]{6}$/.test(h))code=h;
-  let guardado=null;try{guardado=JSON.parse(localStorage.getItem(COOPKEY)||"null")}catch(e){}
-  if(code){CO.hashCode=code;setModo("coop");coopInit().then(ok=>{if(ok&&coopOk())unirseSala(code);else cRenderBox()});return}
-  if(guardado&&guardado.code&&guardado.activo){setModo("coop");coopInit().then(ok=>{if(ok&&coopOk())entrarSala(guardado.code);else cRenderBox()})}
-}
-
 S=load()||fresh();
 boot();
 intro();
-coopArranque();
 samplePromise=claude_use("sample").then(s=>{sample=s||null;samplePromise=null;if(S.modo==="jugar"&&!busy)renderOpts();return sample});
 claude_use("downloads").then(d=>{downloads=d});
 })();
